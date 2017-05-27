@@ -1,0 +1,42 @@
+HTTP/1.1 201 Created
+Server: nginx/1.4.4
+Date: Sun, 19 Jan 2014 11:41:55 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 344
+Connection: keep-alive
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+Access-Control-Max-Age: 300
+Cache-Control: no-cache, no-store
+Strict-Transport-Security: max-age=31556926; includeSubDomains
+X-Whom: dc1-web-2
+
+{
+  "amount": 995,
+  "created": "2017-05-27T13:10:23.419831+00:00",
+  "currency": "EUR",
+  "description": "Test payment",
+  "id": "c69d0d52-be19-4c50-83dc-6acbb53d74b1",
+  "merchant_order_id": "00101012",
+  "modified": "2017-05-27T13:10:23.539823+00:00",
+  "project_id": "4b005552-3f79-4d59-b4b7-2930ac39a145",
+  "return_url": "http://google.nl",
+  "status": "new",
+  "transactions": [
+    {
+      "amount": 995,
+      "balance": "test",
+      "created": "2017-05-27T13:10:23.455025+00:00",
+      "currency": "EUR",
+      "description": "Test payment",
+      "id": "4945b425-1757-4987-bba8-42487a332543",
+      "modified": "2017-05-27T13:10:23.509642+00:00",
+      "payment_method": "ideal",
+      "payment_method_details": {
+        "issuer_id": "INGBNL2A"
+      },
+      "payment_url": "https://api.gingerpayments.com/redirect/4945b425-1757-4987-bba8-42487a332543/to/payment/",
+      "status": "new"
+    }
+  ]
+}
