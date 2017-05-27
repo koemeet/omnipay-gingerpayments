@@ -22,10 +22,10 @@
         }
     },
     "require": {
-        "omnipay/common": "^3"
+        "omnipay/common": "^2|^3"
     },
     "require-dev": {
-        "omnipay/tests": "^3"
+        "omnipay/tests": "^2|^3"
     },
     "extra": {
         "branch-alias": {
