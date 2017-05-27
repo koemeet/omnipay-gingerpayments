@@ -2,8 +2,6 @@
 
 namespace Omnipay\GingerPayments\Message;
 
-use Omnipay\Common\Http\ResponseParser;
-
 /**
  * @author Steffen Brem <steffenbrem@gmail.com>
  */
@@ -14,7 +12,8 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('apiKey', 'amount', 'description', 'returnUrl');
 
         $data = array();
-        $data['amount'] = $this->getAmount();
+        $data['currency'] = 'EUR';
+        $data['amount'] = round((float)$this->getAmount() * 100);
         $data['description'] = $this->getDescription();
         $data['return_url'] = $this->getReturnUrl();
 
@@ -40,8 +39,10 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('POST', '/orders/', $data);
+        $httpResponse = $this->sendRequest('POST', 'orders/', $data);
 
-        return $this->response = new PurchaseResponse($this, ResponseParser::json($httpResponse));
+        $tan = $httpResponse->json();
+
+        return $this->response = new PurchaseResponse($this, $httpResponse->json());
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Omnipay\GingerPayments\Message;
 
+use Guzzle\Common\Event;
+
 /**
  * @author Steffen Brem <steffenbrem@gmail.com>
  */
@@ -31,15 +33,37 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function sendRequest($method, $endpoint, $data = null)
     {
+        $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {
+            /**
+             * @var \Guzzle\Http\Message\Response $response
+             */
+            $response = $event['response'];
+
+            if ($response->isError()) {
+                $event->stopPropagation();
+            }
+        });
+
+        $credentials = base64_encode($this->getApiKey() . ':');
+
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+        ];
+
+        $body = null;
+
+        if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
+            $body = json_encode($data);
+            $headers['Content-Type'] = 'application/json';
+        }
+
         $httpRequest = $this->httpClient->createRequest(
             $method,
             $this->endpoint . $endpoint,
-            array(
-                'Authorization' => 'Basic ' . $this->getApiKey()
-            ),
-            json_encode($data)
+            $headers,
+            $body
         );
 
-        return $this->httpClient->sendRequest($httpRequest);
+        return $httpRequest->send();
     }
 }

@@ -19,8 +19,8 @@ class FetchIssuersRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->sendRequest('GET', '/ideal/issuers');
+        $httpResponse = $this->sendRequest('GET', 'ideal/issuers');
 
-        return $this->response = new FetchIssuersResponse($this, ResponseParser::json($httpResponse));
+        return $this->response = new FetchIssuersResponse($this, $httpResponse->json());
     }
 }
