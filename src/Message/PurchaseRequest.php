@@ -9,10 +9,10 @@ class PurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('apiKey', 'amount', 'description', 'returnUrl');
+        $this->validate('apiKey', 'currency', 'amount', 'description', 'returnUrl');
 
         $data = array();
-        $data['currency'] = 'EUR';
+        $data['currency'] = $this->getCurrency();
         $data['amount'] = round((float)$this->getAmount() * 100);
         $data['description'] = $this->getDescription();
         $data['return_url'] = $this->getReturnUrl();
